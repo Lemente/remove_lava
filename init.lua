@@ -8,6 +8,14 @@ local timer = 0
 --	    minetest.chat_send_all(type(min_height))
 --	    minetest.chat_send_all(type(max_height))
 
+
+-- stop lava from flowing and duplicating (in case another mod)
+local override_def = {liquid_range = 0, liquid_renewable = false}
+minetest.override_item("default:lava_source", override_def)
+minetest.override_item("default:lava_flowing", override_def)
+
+
+
 minetest.register_privilege("remove_lava", "player can use /remove_lava command")
 
 minetest.register_chatcommand("remove_lava", {
@@ -102,6 +110,58 @@ minetest.register_abm({
 minetest.register_lbm({
 	name="remove_lava:flowing",
 	nodenames = {"default:lava_flowing"},
+	run_at_every_load=true,
+	action = function(pos,node)
+		if remove_lava == true and pos.y>min_height and pos.y<max_height then
+			minetest.set_node(pos,{name="air"})
+		end
+	end
+})
+
+
+--remove basic flames
+minetest.register_abm({
+	name="remove_lava:flowing",
+	nodenames = {"fire:basic_flame"},
+	interval = 1,
+	chance = 1,
+	catch_up = false,
+	action = function(pos,node)
+		if remove_lava == true and pos.y>min_height and pos.y<max_height then
+			minetest.set_node(pos,{name="air"})
+		end
+	end
+})
+
+minetest.register_lbm({
+	name="remove_lava:flowing",
+	nodenames = {"fire:basic_flame"},
+	run_at_every_load=true,
+	action = function(pos,node)
+		if remove_lava == true and pos.y>min_height and pos.y<max_height then
+			minetest.set_node(pos,{name="air"})
+		end
+	end
+})
+
+
+--remove permanent flame
+minetest.register_abm({
+	name="remove_lava:flowing",
+	nodenames = {"fire:permanent_flame"},
+	interval = 1,
+	chance = 1,
+	catch_up = false,
+	action = function(pos,node)
+		if remove_lava == true and pos.y>min_height and pos.y<max_height then
+			minetest.set_node(pos,{name="air"})
+		end
+	end
+})
+
+minetest.register_lbm({
+	name="remove_lava:flowing",
+	nodenames = {"fire:permanent_flame"},
 	run_at_every_load=true,
 	action = function(pos,node)
 		if remove_lava == true and pos.y>min_height and pos.y<max_height then
