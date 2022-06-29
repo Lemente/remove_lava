@@ -32,7 +32,7 @@ minetest.register_chatcommand("remove_lava", {
     		remove_lava = true
 	        min_height = param1
         	max_height = param2
-        	return true , "[remove lava] enabled between height " .. min_height .. " and " .. max_height .. " until "/remove_lava stop" is used"
+        	return true , "[remove lava] enabled between height " .. min_height .. " and " .. max_height .. " until \"/remove_lava stop\" is used"
 	    end
 
 	    if not min_height or not max_height then
